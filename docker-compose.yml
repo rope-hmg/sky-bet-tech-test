@@ -1,9 +1,11 @@
-version: '2'
+version: '3'
 services:
   mongo:
-   image: mongo
-   ports:
-     - "27017:27017"
+    image: mongo
+    ports:
+      - "27017:27017"
+    networks:
+      - sky-net
 
   #zookeeper:
   #  image: wurstmeister/zookeeper
@@ -65,6 +67,11 @@ services:
     build:
       context: .
       dockerfile: writer.Dockerfile
+    depends_on:
+      mongo:
+        condition: service_started
+      rabbitmq:
+        condition: service_healthy
     networks:
       - sky-net
 

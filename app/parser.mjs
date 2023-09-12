@@ -53,14 +53,10 @@ export function* into_packets(buffer) {
 
         let should_add_char = false;
 
-        if (char === ESCAPE) {
-            escaped = true;
-        } else if (char === DELIMITER) {
-            if (escaped) {
-                if (last_char === ESCAPE) {
-                    should_add_char = escaped; // Only add it if it was escaped.
-                    escaped = false;
-                }
+        if (char === DELIMITER) {
+            if (last_char === ESCAPE) {
+                should_add_char = escaped; // Only add it if it was escaped.
+                escaped = false;
             } else {
                 index += 1;
                 packet[index] = "";
